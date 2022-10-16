@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PCR calculator</title>
+  </head>
+  <body>
+    <header class="header">This is Gibson shit</header>
+    <p>
+      <a href="index.html">PCR calculator</a>
+    </p>
+    <table>
+      <thead>
+        <td>Element</td>
+        <td>Size (bp)</td>
+        <td>Conc. ng/&mu;L</td>
+        <td>ratio</td>
+        <td>pmol</td>
+      </thead>
+      <tr>
+        <td>Vector</td>
+        <td>
+          <input
+            type="number"
+            name="vbp"
+            id="vbp"
+            oninput="initialize()"
+            value="5000"
+          />
+        </td>
+        <td>
+          <input
+            type="number"
+            name="vconc"
+            id="vconc"
+            oninput="initialize()"
+            value="50"
+          />
+        </td>
+        <td>
+          <input
+            type="number"
+            name="vratio"
+            id="vratio"
+            oninput="initialize()"
+            value="1"
+          />
+        </td>
+        <td id="vpmol"></td>
+      </tr>
+      <tr>
+        <td>Insert 1</td>
+        <td>
+          <input
+            type="number"
+            name="i1bp"
+            id="i1bp"
+            oninput="initialize()"
+            value="1000"
+          />
+        </td>
+        <td>
+          <input
+            type="number"
+            name="i1conc"
+            id="i1conc"
+            oninput="initialize()"
+            value="45"
+          />
+        </td>
+        <td>
+          <input
+            type="number"
+            name="i1ratio"
+            id="i1ratio"
+            oninput="initialize()"
+            value="2.5"
+          />
+        </td>
+        <td id="i1pmol"></td>
+      </tr>
+
+      <tr>
+        <td>Insert 2</td>
+        <td>
+          <input type="number" name="i2bp" id="i2bp" oninput="initialize()" />
+        </td>
+        <td>
+          <input
+            type="number"
+            name="i2conc"
+            id="i2conc"
+            oninput="initialize()"
+          />
+        </td>
+        <td>
+          <input
+            type="number"
+            name="i2ratio"
+            id="i2ratio"
+            oninput="initialize()"
+          />
+        </td>
+        <td id="i2pmol"></td>
+      </tr>
+
+      <tr>
+        <td>V<sub>max</sub> (&mu;L)</td>
+        <td>
+          <input type="number" name="vmax" id="vmax" value="10" />
+        </td>
+      </tr>
+    </table>
+
+    <p id="output"></p>
+
+    <script>
+      function initialize() {
+        let vbp = document.getElementById("vbp").value;
+        let vconc = document.getElementById("vconc").value;
+        let vratio = document.getElementById("vratio").value;
+        let i1bp = document.getElementById("i1bp").value;
+        let i1conc = document.getElementById("i1conc").value;
+        let i1ratio = document.getElementById("i1ratio").value;
+        let i2bp = document.getElementById("i2bp").value;
+        let i2conc = document.getElementById("i2conc").value;
+        let i2ratio = document.getElementById("i2ratio").value;
+        let vmax = document.getElementById("vmax").value;
+        let m1 = 100;
+        let v1 = ((vratio * vbp) / vconc) * (m1 / vbp);
+        let v2 = ((i1ratio * i1bp) / i1conc) * (m1 / vbp);
+        let v3 = ((i2ratio * i2bp) / i2conc) * (m1 / vbp);
+        let vpmol = (vratio / 0.66) * (m1 / vbp);
+        let i1pmol = (i1ratio / 0.66) * (m1 / vbp);
+        let i2pmol = (i2ratio / 0.66) * (m1 / vbp);
+        let term1 = vbp * vmax;
+        let watervol = 10 - v1 - v2 - v3;
+        document.getElementById("output").innerText =
+          "Vector: " +
+          v1.toFixed(2) +
+          " and insert 1:" +
+          v2.toFixed(2) +
+          " and insert 3: " +
+          v3.toFixed(2) +
+          " plus " +
+          watervol.toFixed(2) +
+          " uL water";
+        document.getElementById("vpmol").innerText = vpmol.toFixed(3);
+        document.getElementById("i1pmol").innerText = i1pmol.toFixed(3);
+        document.getElementById("i2pmol").innerText = i2pmol.toFixed(3);
+      }
+    </script>
+  </body>
+</html>

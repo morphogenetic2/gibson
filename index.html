@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PCR calculator</title>
+  </head>
+  <body>
+    <header>This is... a PCR calculator</header>
+    <input
+      type="number"
+      id="bp"
+      placeholder="number of bases?"
+      oninput="initialize()"
+    />
+
+    <p id="output"></p>
+    <br />
+    <a href="gibson.html">Gibson calculator</a>
+    <script>
+      function initialize() {
+        let bp = document.getElementById("bp").value;
+        if (bp < 0) {
+          document.getElementById("output").innerText =
+            "You can't have negative bases, dumbass";
+        } else {
+          let time = (bp / 1000) * 30;
+          let mins = Math.floor(time / 60);
+          let seconds = Math.round(time % 60);
+          if (mins == 0) {
+            document.getElementById("output").innerText =
+              "You need " + seconds + " s";
+          } else {
+            document.getElementById("output").innerText =
+              "You need " + mins + " m " + seconds + " s";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
